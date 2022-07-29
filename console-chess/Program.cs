@@ -1,14 +1,13 @@
 ﻿using System;
-using Board;
+using board;
 namespace console_chess
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Position p = new Position(3, 4);
-            Console.WriteLine("Position :"+p);
-            Console.ReadLine();
+            Board board = new Board(8, 8);
+            Console.WriteLine();
         }
     }
 }

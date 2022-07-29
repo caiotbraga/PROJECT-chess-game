@@ -1,4 +1,4 @@
-﻿namespace Board
+﻿namespace board
 {
     internal class Position
     {
@@ -13,7 +13,8 @@
 
         public override string ToString()
         {
-            return Line + ","
+            return Line 
+                +","
                 + Column;
         }
     }
