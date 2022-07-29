@@ -12,5 +12,10 @@
             Columns = columns;
             Piece = new Piece[lines, columns];
         }
+
+        public Piece piece(int lines, int columns)
+        {
+            return Piece[lines, columns];
+        }
     }
 }
