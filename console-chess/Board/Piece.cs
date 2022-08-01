@@ -1,13 +1,13 @@
 ﻿namespace board
 {
-    internal class Piece //This class is generic that must have specific pieces of the chess game. Ex: King, tower...
+    internal class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
         public int MovementQuantity { get; protected set; }
         public Board Board { get; protected set; }
 
-        public Piece(Board board, Color color) // alteration: when you create a Piece the Position must be null.
+        public Piece(Board board, Color color) 
         {
             Position = null;
             Color = color;
