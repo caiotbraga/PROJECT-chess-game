@@ -18,18 +18,18 @@
             return Pieces[lines, columns];
         }
 
-        public Piece piece(Position pos) // Improvement: Overload of the piece method to only recieve the parameter pos.
+        public Piece piece(Position pos) 
         {
             return Pieces[pos.Line, pos.Column];
         }
 
-        public bool ExistPiece(Position pos) // Method to see if exist a piece on the position pos.
+        public bool ExistPiece(Position pos) 
         {
-            ValidatePosition(pos); //If the validate is not valid the exception will cut and print the exception message
+            ValidatePosition(pos); 
             return piece(pos) != null; 
         }
 
-        public void PutPiece(Piece p, Position pos) //Improvement: Validation if exists a piece at the position pos.
+        public void PutPiece(Piece p, Position pos) 
         {
             if (ExistPiece(pos)){
                 throw new BoardExceptions("Already exists a piece on this position!");
@@ -38,7 +38,7 @@
             p.Position = pos;
         }
 
-        public bool ValidPosition(Position pos) // Validation: To check if the position is valid
+        public bool ValidPosition(Position pos) 
         {
             if(pos.Line < 0 || pos.Line >= Lines ||pos.Column < 0 || pos.Column >= Columns)
             {
@@ -47,7 +47,7 @@
             return true;
         }
 
-        public void ValidatePosition(Position pos) //Created the method of Exception personalizated
+        public void ValidatePosition(Position pos) 
         {
             if (!ValidPosition(pos))
             {

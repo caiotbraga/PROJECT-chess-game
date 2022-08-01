@@ -7,23 +7,9 @@ namespace console_chess
     {
         static void Main(string[] args)
         {
-            try //Testing if the exception of the board is working.
-            {
-                Board board = new Board(8, 8);
-
-                board.PutPiece(new Tower(board, Color.Black), new Position(0, 0));
-                board.PutPiece(new Tower(board, Color.Black), new Position(12, 3));
-                board.PutPiece(new King(board, Color.Black), new Position(0, 2));
-
-                Screen.PrintBoard(board);
-
-                Console.WriteLine();
-            }
-            catch (BoardExceptions m)
-            {
-                Console.WriteLine(m.Message);
-            }
-            
+            ChessPosition pos = new ChessPosition('c', 7);
+            Console.WriteLine(pos);
+            Console.WriteLine("Position of matrix:"+pos.ToPositon());
         }
     }
 }
