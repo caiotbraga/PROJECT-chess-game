@@ -1,8 +1,8 @@
 ﻿using board;
 namespace Chess
 {
-    internal class ChessPosition //Created the class ChessPosiiton to make the Lines and Columns as the board of chess.
-    {                            //Columns == Letter && Lines == Numbers
+    internal class ChessPosition 
+    {                            
         public char Column { get; set; }
         public int Line { get; set; }
 
@@ -12,12 +12,12 @@ namespace Chess
             Line = line;
         }
 
-        public Position ToPositon() //Convert matrix position to chess position
+        public Position ToPositon() 
         {
             return new Position(8 - Line, Column - 'a'); 
         }
 
-        public override string ToString() // Print the Column and Line like: A1, B2...
+        public override string ToString() 
         {
             return ""+Column + Line;
         }
