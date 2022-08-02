@@ -18,36 +18,49 @@
             return Pieces[lines, columns];
         }
 
-        public Piece piece(Position pos) 
+        public Piece piece(Position pos)
         {
             return Pieces[pos.Line, pos.Column];
         }
 
-        public bool ExistPiece(Position pos) 
+        public bool ExistPiece(Position pos)
         {
-            ValidatePosition(pos); 
-            return piece(pos) != null; 
+            ValidatePosition(pos);
+            return piece(pos) != null;
         }
 
-        public void PutPiece(Piece p, Position pos) 
+        public void PutPiece(Piece p, Position pos)
         {
-            if (ExistPiece(pos)){
+            if (ExistPiece(pos))
+            {
                 throw new BoardExceptions("Already exists a piece on this position!");
             }
-            Pieces[pos.Line, pos.Column] = p; 
+            Pieces[pos.Line, pos.Column] = p;
             p.Position = pos;
         }
 
-        public bool ValidPosition(Position pos) 
+        public Piece RemovePiece(Position pos) //Method to remove a piece.
         {
-            if(pos.Line < 0 || pos.Line >= Lines ||pos.Column < 0 || pos.Column >= Columns)
+            if (piece(pos) == null)
+            {
+                return null;
+            }
+            Piece aux = piece(pos);
+            aux.Position = null; //is not in a position anymore.
+            Pieces[pos.Line, pos.Column] = null; //mark the board's piece position as null. Won't have piece there anymore.
+            return aux; //return the piece
+        }
+
+        public bool ValidPosition(Position pos)
+        {
+            if (pos.Line < 0 || pos.Line >= Lines || pos.Column < 0 || pos.Column >= Columns)
             {
                 return false;
             }
             return true;
         }
 
-        public void ValidatePosition(Position pos) 
+        public void ValidatePosition(Position pos)
         {
             if (!ValidPosition(pos))
             {
