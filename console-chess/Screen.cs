@@ -1,10 +1,46 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System;
 using board;
 using Chess;
 namespace console_chess
 {
     internal class Screen
     {
+
+        public static void printMatch(ChessMatch match) //created method to print match
+        {
+            PrintBoard(match.board);
+            Console.WriteLine();
+            printCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Round " + match.round);
+            Console.WriteLine("Round player: " + match.currentPlayer);
+        }
+
+        public static void printCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Captured pieces: ");
+            Console.Write("White: ");
+            printSet(match.capturedPieces(Color.White));
+            Console.WriteLine();
+            Console.Write("Black: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            printSet(match.capturedPieces(Color.Black)); //to print the captured pieces with the right color
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void printSet(HashSet<Piece> set) //Method to print set
+        {
+            Console.Write("[");
+            foreach(Piece x in set)
+            {
+                Console.Write(x+ " ");
+            }
+            Console.Write("]");
+        }
+
         public static void PrintBoard(Board board) 
         {
             for(int i = 0; i < board.Lines; i++)

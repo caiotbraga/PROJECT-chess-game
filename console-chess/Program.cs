@@ -16,15 +16,12 @@ namespace console_chess
                     try
                     {
                         Console.Clear();
-                        Screen.PrintBoard(match.board);
-                        Console.WriteLine();
-                        Console.WriteLine("Round " + match.round);
-                        Console.WriteLine("Round player: " + match.currentPlayer);
+                        Screen.printMatch(match);
 
                         Console.WriteLine();
                         Console.Write("Origin:");
                         Position origin = Screen.ReadChessPosition().ToPositon();
-                        match.validateOriginPosition(origin);
+                        match.validateOriginPosition(origin); 
 
                         bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
 

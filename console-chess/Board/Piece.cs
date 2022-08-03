@@ -20,7 +20,7 @@
             MovementQuantity++;
         }
 
-        public bool existPossibleMoves() //Method to check if have at least 1 possible move
+        public bool existPossibleMoves()
         {
             bool[,] mat = possibleMoves();
             for(int i = 0; i < Board.Lines; i++)
@@ -36,7 +36,7 @@
             return false;
         }
 
-        public bool canMoveTo(Position pos) //Method to check if the destiny position is valid.
+        public bool canMoveTo(Position pos) 
         {
             return possibleMoves()[pos.Line, pos.Column];
         }
