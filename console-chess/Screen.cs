@@ -7,7 +7,7 @@ namespace console_chess
     internal class Screen
     {
 
-        public static void printMatch(ChessMatch match) //created method to print match
+        public static void printMatch(ChessMatch match) 
         {
             PrintBoard(match.board);
             Console.WriteLine();
@@ -15,6 +15,10 @@ namespace console_chess
             Console.WriteLine();
             Console.WriteLine("Round " + match.round);
             Console.WriteLine("Round player: " + match.currentPlayer);
+            if (match.checkmate)
+            {
+                Console.WriteLine("CHECKMATE!");
+            }
         }
 
         public static void printCapturedPieces(ChessMatch match)
@@ -26,12 +30,12 @@ namespace console_chess
             Console.Write("Black: ");
             ConsoleColor aux = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
-            printSet(match.capturedPieces(Color.Black)); //to print the captured pieces with the right color
+            printSet(match.capturedPieces(Color.Black)); 
             Console.ForegroundColor = aux;
             Console.WriteLine();
         }
 
-        public static void printSet(HashSet<Piece> set) //Method to print set
+        public static void printSet(HashSet<Piece> set) 
         {
             Console.Write("[");
             foreach(Piece x in set)
@@ -85,7 +89,7 @@ namespace console_chess
 
         public static ChessPosition ReadChessPosition() 
         {
-            string s = Console.ReadLine();
+            string s = Console.ReadLine().ToLower();
             char column = s[0]; 
             int line = int.Parse(s[1] + "");  
             return new ChessPosition(column, line);

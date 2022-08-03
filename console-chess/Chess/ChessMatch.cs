@@ -10,6 +10,7 @@ namespace Chess
         public bool finished { get; private set; }
         private HashSet<Piece> pieces; 
         private HashSet<Piece> captured;
+        public bool checkmate { get;private set; }
 
         public ChessMatch() 
         {
@@ -17,26 +18,55 @@ namespace Chess
             round = 1;
             currentPlayer = Color.White; 
             finished = false;
+            checkmate = false;
             pieces = new HashSet<Piece>();
             captured = new HashSet<Piece>();
             insertPiece();
         }
 
-        public void peformMovement(Position origin, Position destiny) 
+        public Piece peformMovement(Position origin, Position destiny) //improvement
         {
             Piece p = board.RemovePiece(origin); 
-            p.incrementMovimentQuantity();
+            p.incrementMovementQuantity();
             Piece capturedPiece = board.RemovePiece(destiny); 
             board.PutPiece(p, destiny); 
             if(capturedPiece != null)
             {
-                captured.Add(capturedPiece); //add to set(HashSet)
+                captured.Add(capturedPiece);
             }
+            return capturedPiece;
         }
 
-        public void makeMovement(Position origin, Position destiny) 
+        public void undoMove(Position origin, Position destiny, Piece capturedPiece)
         {
-            peformMovement(origin, destiny);
+            Piece p = board.RemovePiece(destiny);
+            p.decrementMovementQuantity();
+            if(capturedPiece != null)
+            {
+                board.PutPiece(capturedPiece, destiny);
+                captured.Remove(capturedPiece);
+            }
+            board.PutPiece(p, origin);
+        }
+
+        public void makePlay(Position origin, Position destiny) //Verify if the movement don't make your own checkmate //renamed
+        {
+            Piece capturedPiece = peformMovement(origin, destiny);
+
+            if (isCheckmate(currentPlayer))
+            {
+                undoMove(origin, destiny, capturedPiece);
+                throw new BoardExceptions("You can't put yourself in checkmate!");
+            }
+
+            if (isCheckmate(adversary(currentPlayer)))
+            {
+                checkmate = true;
+            }
+            else
+            {
+                checkmate = false;
+            }
             round++;
             switchPlayer();
         }
@@ -78,7 +108,7 @@ namespace Chess
             }
         }
 
-        public HashSet<Piece> capturedPieces(Color color) //Method to set division by colors 
+        public HashSet<Piece> capturedPieces(Color color) 
         {
             HashSet<Piece> aux = new HashSet<Piece>();
             foreach(Piece x in captured)
@@ -101,8 +131,51 @@ namespace Chess
                     aux.Add(x);
                 }
             }
-            aux.ExceptWith(capturedPieces(color)); //Remove all pieces removed with the same color.
+            aux.ExceptWith(capturedPieces(color)); 
             return aux;
+        }
+
+        private Color adversary(Color color) //private method to identify the adversary
+        {
+            if(color == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+
+        private Piece king(Color color) //Method to identify the adversary king
+        {
+            foreach(Piece x in pieceInGame(color))
+            {
+                if(x is King) //Use is beacuse the Class King is a subclass of Piece
+                {
+                    return x;
+                }
+            }
+            return null;
+        }
+
+        public bool isCheckmate(Color color) //Checkmate method
+        {
+            Piece K = king(color);
+            if(K == null)//Dont't may happen
+            {
+                throw new BoardExceptions("There's no king of color " + color + " on the board!");
+            }
+  
+            foreach(Piece x in pieceInGame(adversary(color)))
+            {
+                bool[,] mat = x.possibleMoves();
+                if (mat[K.Position.Line, K.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
@@ -112,7 +185,7 @@ namespace Chess
             pieces.Add(piece);
         }
 
-        public void insertPiece() //improvement
+        public void insertPiece() 
         {
             insertNewPiece('c', 1, new Tower(board, Color.White));
             insertNewPiece('c', 2, new Tower(board, Color.White));

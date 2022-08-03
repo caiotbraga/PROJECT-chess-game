@@ -33,7 +33,7 @@ namespace console_chess
                         Position destiny = Screen.ReadChessPosition().ToPositon();
                         match.validateDestinyPosition(origin, destiny);
 
-                        match.makeMovement(origin, destiny);
+                        match.makePlay(origin, destiny);
                     }
                     catch(BoardExceptions e)
                     {
