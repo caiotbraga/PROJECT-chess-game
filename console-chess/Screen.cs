@@ -12,41 +12,69 @@ namespace console_chess
                 Console.Write(8 - i + " "); 
                 for(int j = 0; j < board.Columns; j++)
                 {
-                    if(board.piece(i,j) == null)
-                    {
-                        Console.Write("- ");
-                    }
-                    else
-                    {
-                       PrintPiece(board.piece(i, j));
-                       Console.Write(" ");
-                    }
+                       PrintPiece(board.piece(i, j));                      
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("  A B C D E F G H"); 
         }
 
-        public static ChessPosition ReadChessPosition() //Method to read the position as in the chess game by the user.
+        public static void PrintBoard(Board board, bool [,] PossiblePositions) //overload to recieve the argument boolean.
         {
-            string s = Console.ReadLine();
-            char column = s[0]; //Getting the string piece (0) as a char letter.
-            int line = int.Parse(s[1] + ""); //Getting the string piece (1) as a int number. 
-            return new ChessPosition(column, line); //Inserting the position as a chess game readed by the user.
+
+            ConsoleColor originalBackground = Console.BackgroundColor;
+            ConsoleColor changedBackground = ConsoleColor.DarkGray; 
+
+            for (int i = 0; i < board.Lines; i++)
+            {
+                Console.Write(8 - i + " ");
+                for (int j = 0; j < board.Columns; j++)
+                {
+                    if(PossiblePositions[i, j])
+                    {
+                        Console.BackgroundColor = changedBackground;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = originalBackground;
+                    }
+                    PrintPiece(board.piece(i, j));
+                    Console.BackgroundColor = originalBackground;
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("  A B C D E F G H");
+            Console.BackgroundColor = originalBackground; //making sure the mathod returns to the original color.
         }
 
-        public static void PrintPiece(Piece piece) 
+        public static ChessPosition ReadChessPosition() 
         {
-            if(piece.Color == Color.White)
+            string s = Console.ReadLine();
+            char column = s[0]; 
+            int line = int.Parse(s[1] + "");  
+            return new ChessPosition(column, line);
+        }
+
+        public static void PrintPiece(Piece piece) //improvement
+        {
+            if(piece == null)
             {
-                Console.Write(piece);
+                Console.Write("- ");
             }
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(piece);
-                Console.ForegroundColor = aux;
+                if(piece.Color == Color.White)
+                {
+                    Console.Write(piece);
+                }
+                else
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(piece);
+                    Console.ForegroundColor = aux;
+                }
+                Console.Write(" ");
             }
         }
     }

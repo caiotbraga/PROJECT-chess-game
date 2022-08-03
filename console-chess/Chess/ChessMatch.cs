@@ -1,31 +1,31 @@
 ﻿using board;
 namespace Chess
 {
-    internal class ChessMatch //Created the class ChessMatch where have the game mechanics.
+    internal class ChessMatch
     {
         public Board board { get; private set; } 
         private int round;
         private Color currentPlayer;
-        public bool finished { get; private set; } //Attribute to check if the match is finished.
+        public bool finished { get; private set; } 
 
-        public ChessMatch() //Created the constructor with the predefined parameters.
+        public ChessMatch() 
         {
             board = new Board(8, 8); 
             round = 1;
-            currentPlayer = Color.White; //The player that start(white).
+            currentPlayer = Color.White; 
             finished = false;
             insertPiece();
         }
 
-        public void peformMoviment(Position origin, Position destiny) //Method to make the moviment happen.
+        public void peformMoviment(Position origin, Position destiny) 
         {
-            Piece p = board.RemovePiece(origin); //Removed the piece at position origin.
-            p.incrementMovimentQuantity(); //Added the moviment quantity.
-            Piece capturedPiece = board.RemovePiece(destiny); //Removed the piece that i captured.
-            board.PutPiece(p, destiny); //Put the piece where i captured the other piece.
+            Piece p = board.RemovePiece(origin); 
+            p.incrementMovimentQuantity();
+            Piece capturedPiece = board.RemovePiece(destiny); 
+            board.PutPiece(p, destiny); 
         }
 
-        public void insertPiece() //Method to insert a piece as a chess game(ex: a1, c3, d3)
+        public void insertPiece() 
         {
             board.PutPiece(new Tower(board, Color.White), new ChessPosition('c', 1).ToPositon());
             board.PutPiece(new Tower(board, Color.White), new ChessPosition('c', 2).ToPositon());
