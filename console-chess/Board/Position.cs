@@ -11,7 +11,7 @@
             Column = column;
         }
 
-        public void setValues(int line, int column) //Method to set the value of position
+        public void setValues(int line, int column) 
         {
             Line = line;
             Column = column;

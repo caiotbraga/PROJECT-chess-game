@@ -13,24 +13,36 @@ namespace console_chess
 
                 while (!match.finished)
                 {
-                    Console.Clear();
-                    Screen.PrintBoard(match.board);
-                    
-                    Console.WriteLine();
-                    Console.Write("Origin:");
-                    Position origin = Screen.ReadChessPosition().ToPositon();
+                    try
+                    {
+                        Console.Clear();
+                        Screen.PrintBoard(match.board);
+                        Console.WriteLine();
+                        Console.WriteLine("Round " + match.round);
+                        Console.WriteLine("Round player: " + match.currentPlayer);
 
-                    bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
-                    //boolean matrix to save the possible moves according to the origin position.
+                        Console.WriteLine();
+                        Console.Write("Origin:");
+                        Position origin = Screen.ReadChessPosition().ToPositon();
+                        match.validateOriginPosition(origin);
 
-                    Console.Clear();
-                    Screen.PrintBoard(match.board, possiblePositions);
+                        bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
 
-                    Console.WriteLine();
-                    Console.Write("Destiny:");
-                    Position destiny = Screen.ReadChessPosition().ToPositon();
+                        Console.Clear();
+                        Screen.PrintBoard(match.board, possiblePositions);
 
-                    match.peformMoviment(origin, destiny);
+                        Console.WriteLine();
+                        Console.Write("Destiny:");
+                        Position destiny = Screen.ReadChessPosition().ToPositon();
+                        match.validateDestinyPosition(origin, destiny);
+
+                        match.makeMovement(origin, destiny);
+                    }
+                    catch(BoardExceptions e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
                 
             }

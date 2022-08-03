@@ -12,13 +12,13 @@ namespace Chess
             return "K";
         }
 
-        private bool canMove(Position pos) //Method to increment when the king can move.
+        private bool canMove(Position pos) 
         {
             Piece p = Board.piece(pos);
-            return p == null || p.Color != Color; //Veiry if have some piece in the board at position pos or if the piece at position pos is an enemy.
+            return p == null || p.Color != Color; 
 
         }
-        public override bool[,] possibleMoves() //A boolean method to check if the moviments are posible(must return true if it is).
+        public override bool[,] possibleMoves() 
         {
             bool[,] mat = new bool[Board.Lines, Board.Columns];
 

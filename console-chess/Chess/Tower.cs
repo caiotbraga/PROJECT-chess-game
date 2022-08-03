@@ -28,9 +28,9 @@ namespace Chess
 
             //up
             pos.setValues(Position.Line - 1, Position.Column);
-            while (Board.ValidPosition(pos) && canMove(pos)) //while the position is valid and can move
+            while (Board.ValidPosition(pos) && canMove(pos)) 
             {
-                mat[pos.Line, pos.Column] = true; //the movement can happen
+                mat[pos.Line, pos.Column] = true; 
                 if(Board.piece(pos) != null && Board.piece(pos).Color != Color)
                 {
                     break;
@@ -39,9 +39,9 @@ namespace Chess
             }
             //down
             pos.setValues(Position.Line + 1, Position.Column);
-            while (Board.ValidPosition(pos) && canMove(pos)) //while the position is valid and can move
+            while (Board.ValidPosition(pos) && canMove(pos)) 
             {
-                mat[pos.Line, pos.Column] = true; //the movement can happen
+                mat[pos.Line, pos.Column] = true; 
                 if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
                 {
                     break;
@@ -50,9 +50,9 @@ namespace Chess
             }
             //right
             pos.setValues(Position.Line, Position.Column + 1);
-            while (Board.ValidPosition(pos) && canMove(pos)) //while the position is valid and can move
+            while (Board.ValidPosition(pos) && canMove(pos)) 
             {
-                mat[pos.Line, pos.Column] = true; //the movement can happen
+                mat[pos.Line, pos.Column] = true;
                 if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
                 {
                     break;
@@ -61,9 +61,9 @@ namespace Chess
             }
             //left
             pos.setValues(Position.Line, Position.Column - 1);
-            while (Board.ValidPosition(pos) && canMove(pos)) //while the position is valid and can move
+            while (Board.ValidPosition(pos) && canMove(pos))
             {
-                mat[pos.Line, pos.Column] = true; //the movement can happen
+                mat[pos.Line, pos.Column] = true; 
                 if (Board.piece(pos) != null && Board.piece(pos).Color != Color) 
                 {
                     break;

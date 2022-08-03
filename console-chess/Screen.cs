@@ -19,7 +19,7 @@ namespace console_chess
             Console.WriteLine("  A B C D E F G H"); 
         }
 
-        public static void PrintBoard(Board board, bool [,] PossiblePositions) //overload to recieve the argument boolean.
+        public static void PrintBoard(Board board, bool [,] PossiblePositions) 
         {
 
             ConsoleColor originalBackground = Console.BackgroundColor;
@@ -44,7 +44,7 @@ namespace console_chess
                 Console.WriteLine();
             }
             Console.WriteLine("  A B C D E F G H");
-            Console.BackgroundColor = originalBackground; //making sure the mathod returns to the original color.
+            Console.BackgroundColor = originalBackground;
         }
 
         public static ChessPosition ReadChessPosition() 
@@ -55,7 +55,7 @@ namespace console_chess
             return new ChessPosition(column, line);
         }
 
-        public static void PrintPiece(Piece piece) //improvement
+        public static void PrintPiece(Piece piece) 
         {
             if(piece == null)
             {

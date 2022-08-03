@@ -4,8 +4,8 @@ namespace Chess
     internal class ChessMatch
     {
         public Board board { get; private set; } 
-        private int round;
-        private Color currentPlayer;
+        public int round { get; private set; } //Changed to public to show on console but without can be changed.
+        public Color currentPlayer { get; private set; }//Changed to public to show on console but without can be changed.
         public bool finished { get; private set; } 
 
         public ChessMatch() 
@@ -17,12 +17,56 @@ namespace Chess
             insertPiece();
         }
 
-        public void peformMoviment(Position origin, Position destiny) 
+        public void peformMovement(Position origin, Position destiny) 
         {
             Piece p = board.RemovePiece(origin); 
             p.incrementMovimentQuantity();
             Piece capturedPiece = board.RemovePiece(destiny); 
             board.PutPiece(p, destiny); 
+        }
+
+        public void makeMovement(Position origin, Position destiny) //Method to make the movement happen changing the rounds.
+        {
+            peformMovement(origin, destiny);
+            round++;
+            switchPlayer();
+        }
+
+        public void validateOriginPosition(Position pos) //Method to print the exception according to the origin error
+        {
+            if(board.piece(pos) == null) 
+            {
+                throw new BoardExceptions("There is no piece in the chosen position");
+            }
+            if(currentPlayer != board.piece(pos).Color)
+            {
+                throw new BoardExceptions("The origin piece chosen isn't yours.");
+            }
+            if (!board.piece(pos).existPossibleMoves())
+            {
+                throw new BoardExceptions("Don't have any possible move to the origin piece chosen!");
+            }
+        }
+
+        public void validateDestinyPosition(Position origin, Position destiny) //Method to print the exception according to destination the error
+        {
+            if (!board.piece(origin).canMoveTo(destiny))
+            {
+                throw new BoardExceptions("Destination position invalid");
+            }
+        }
+
+
+        public void switchPlayer() //Method to change the current player
+        {
+            if(currentPlayer == Color.White)
+            {
+                currentPlayer = Color.Black;
+            }
+            else
+            {
+                currentPlayer = Color.White;
+            }
         }
 
         public void insertPiece() 

@@ -1,6 +1,6 @@
 ﻿namespace board
 {
-    abstract internal class Piece //It's a abstract class beacuse have an abstract method.
+    abstract internal class Piece 
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -20,7 +20,28 @@
             MovementQuantity++;
         }
 
-        public abstract bool[,] possibleMoves(); //Created a abstract method that has no implementation here.
+        public bool existPossibleMoves() //Method to check if have at least 1 possible move
+        {
+            bool[,] mat = possibleMoves();
+            for(int i = 0; i < Board.Lines; i++)
+            {
+                for(int j = 0; j < Board.Columns; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool canMoveTo(Position pos) //Method to check if the destiny position is valid.
+        {
+            return possibleMoves()[pos.Line, pos.Column];
+        }
+
+        public abstract bool[,] possibleMoves(); 
     }
 }
  
