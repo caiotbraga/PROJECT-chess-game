@@ -41,7 +41,8 @@ namespace console_chess
                         Console.ReadLine();
                     }
                 }
-                
+                Console.Clear();
+                Screen.printMatch(match);
             }
             catch (BoardExceptions m)
             {

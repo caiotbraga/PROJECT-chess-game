@@ -7,17 +7,25 @@ namespace console_chess
     internal class Screen
     {
 
-        public static void printMatch(ChessMatch match) 
+        public static void printMatch(ChessMatch match)
         {
             PrintBoard(match.board);
             Console.WriteLine();
             printCapturedPieces(match);
             Console.WriteLine();
             Console.WriteLine("Round " + match.round);
-            Console.WriteLine("Round player: " + match.currentPlayer);
-            if (match.checkmate)
+            if (!match.finished)
             {
-                Console.WriteLine("CHECKMATE!");
+                Console.WriteLine("Round player: " + match.currentPlayer);
+                if (match.checkmate)
+                {
+                    Console.WriteLine("CHECKMATE!");
+                }
+            }
+            else //if the match finished will print checkmate and the match's winner
+            {
+                Console.WriteLine("CHECKATE!");
+                Console.WriteLine("Winner: "+match.currentPlayer);
             }
         }
 
@@ -30,47 +38,47 @@ namespace console_chess
             Console.Write("Black: ");
             ConsoleColor aux = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
-            printSet(match.capturedPieces(Color.Black)); 
+            printSet(match.capturedPieces(Color.Black));
             Console.ForegroundColor = aux;
             Console.WriteLine();
         }
 
-        public static void printSet(HashSet<Piece> set) 
+        public static void printSet(HashSet<Piece> set)
         {
             Console.Write("[");
-            foreach(Piece x in set)
+            foreach (Piece x in set)
             {
-                Console.Write(x+ " ");
+                Console.Write(x + " ");
             }
             Console.Write("]");
         }
 
-        public static void PrintBoard(Board board) 
+        public static void PrintBoard(Board board)
         {
-            for(int i = 0; i < board.Lines; i++)
+            for (int i = 0; i < board.Lines; i++)
             {
-                Console.Write(8 - i + " "); 
-                for(int j = 0; j < board.Columns; j++)
+                Console.Write(8 - i + " ");
+                for (int j = 0; j < board.Columns; j++)
                 {
-                       PrintPiece(board.piece(i, j));                      
+                    PrintPiece(board.piece(i, j));
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("  A B C D E F G H"); 
+            Console.WriteLine("  A B C D E F G H");
         }
 
-        public static void PrintBoard(Board board, bool [,] PossiblePositions) 
+        public static void PrintBoard(Board board, bool[,] PossiblePositions)
         {
 
             ConsoleColor originalBackground = Console.BackgroundColor;
-            ConsoleColor changedBackground = ConsoleColor.DarkGray; 
+            ConsoleColor changedBackground = ConsoleColor.DarkGray;
 
             for (int i = 0; i < board.Lines; i++)
             {
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < board.Columns; j++)
                 {
-                    if(PossiblePositions[i, j])
+                    if (PossiblePositions[i, j])
                     {
                         Console.BackgroundColor = changedBackground;
                     }
@@ -87,23 +95,23 @@ namespace console_chess
             Console.BackgroundColor = originalBackground;
         }
 
-        public static ChessPosition ReadChessPosition() 
+        public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine().ToLower();
-            char column = s[0]; 
-            int line = int.Parse(s[1] + "");  
+            char column = s[0];
+            int line = int.Parse(s[1] + "");
             return new ChessPosition(column, line);
         }
 
-        public static void PrintPiece(Piece piece) 
+        public static void PrintPiece(Piece piece)
         {
-            if(piece == null)
+            if (piece == null)
             {
                 Console.Write("- ");
             }
             else
             {
-                if(piece.Color == Color.White)
+                if (piece.Color == Color.White)
                 {
                     Console.Write(piece);
                 }
