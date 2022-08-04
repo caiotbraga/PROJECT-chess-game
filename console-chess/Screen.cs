@@ -22,7 +22,7 @@ namespace console_chess
                     Console.WriteLine("CHECKMATE!");
                 }
             }
-            else //if the match finished will print checkmate and the match's winner
+            else 
             {
                 Console.WriteLine("CHECKATE!");
                 Console.WriteLine("Winner: "+match.currentPlayer);

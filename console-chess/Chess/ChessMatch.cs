@@ -68,7 +68,7 @@ namespace Chess
                 checkmate = false;
             }
 
-            if (checkmateTest(adversary(currentPlayer))) //if i made a play and my adversary is in checkmate the game finish
+            if (checkmateTest(adversary(currentPlayer))) 
             {
                 finished = true;
             }
@@ -97,7 +97,7 @@ namespace Chess
 
         public void validateDestinyPosition(Position origin, Position destiny)
         {
-            if (!board.piece(origin).canMoveTo(destiny))
+            if (!board.piece(origin).possibleMovement(destiny))
             {
                 throw new BoardExceptions("Destination position invalid");
             }
@@ -194,18 +194,18 @@ namespace Chess
             }
             foreach (Piece x in pieceInGame(color))
             {
-                bool[,] mat = x.possibleMoves(); //Matrix to check all the possivel moves of a piece
+                bool[,] mat = x.possibleMoves(); 
                 for (int i = 0; i < board.Lines; i++)
                 {
                     for (int j = 0; j < board.Columns; j++)
                     {
-                        if (mat[i, j]) //if the matrix is true(can move)
+                        if (mat[i, j]) 
                         {
                             Position origin = x.Position;
                             Position destiny = new Position(i, j);
-                            Piece capturedPiece = peformMovement(origin, destiny); //If a piece capture an adversary
-                            bool checkmateTest = isCheckmate(color); //verify if is check for the piece that captured
-                            undoMove(origin, destiny, capturedPiece); //if is checkmate --> undomove || else --> can move
+                            Piece capturedPiece = peformMovement(origin, destiny); 
+                            bool checkmateTest = isCheckmate(color); 
+                            undoMove(origin, destiny, capturedPiece);
                             if (!checkmateTest)
                             {
                                 return false;
@@ -214,7 +214,7 @@ namespace Chess
                     }
                 }
             }
-            return true; //for this color the game is lost. Don't have any move.
+            return true; 
         }
 
 
@@ -228,13 +228,13 @@ namespace Chess
         public void insertPiece()
         {
             insertNewPiece('c', 1, new Tower(board, Color.White));
-            insertNewPiece('h', 7, new Tower(board, Color.White));
+            insertNewPiece('e', 1, new Tower(board, Color.White));
             insertNewPiece('d', 1, new King(board, Color.White));
 
            
-            insertNewPiece('b', 8, new Tower(board, Color.Black));
-            insertNewPiece('a', 8, new King(board, Color.Black));
-
+            insertNewPiece('c', 8, new Tower(board, Color.Black));
+            insertNewPiece('d', 8, new King(board, Color.Black));
+            insertNewPiece('e', 8, new Tower(board, Color.Black));
         }
     }
 }
