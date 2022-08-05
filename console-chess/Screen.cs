@@ -37,7 +37,7 @@ namespace console_chess
             Console.WriteLine();
             Console.Write("Black: ");
             ConsoleColor aux = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             printSet(match.capturedPieces(Color.Black));
             Console.ForegroundColor = aux;
             Console.WriteLine();
@@ -118,7 +118,7 @@ namespace console_chess
                 else
                 {
                     ConsoleColor aux = Console.ForegroundColor;
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.Write(piece);
                     Console.ForegroundColor = aux;
                 }

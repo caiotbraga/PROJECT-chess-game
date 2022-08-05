@@ -46,7 +46,9 @@
             return possibleMoves()[pos.Line, pos.Column];
         }
 
-        public abstract bool[,] possibleMoves(); 
+        public abstract bool[,] possibleMoves();
+
+        public abstract bool canMove(Position pos); //I made it abstract cuz i was using in all pieces classes 
     }
 }
  

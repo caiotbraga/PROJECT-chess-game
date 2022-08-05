@@ -13,7 +13,7 @@ namespace Chess
             return "T";
         }
 
-        private bool canMove(Position pos)
+        public override bool canMove(Position pos)
         {
             Piece p = Board.piece(pos);
             return p == null || p.Color != Color;
