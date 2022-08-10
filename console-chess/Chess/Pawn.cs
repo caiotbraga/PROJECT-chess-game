@@ -54,6 +54,11 @@ namespace Chess
                 {
                     mat[pos.Line, pos.Column] = true;
                 }
+                pos.setValues(Position.Line - 1, Position.Column + 1);
+                if (Board.ValidPosition(pos) && existEnemy(pos))
+                {
+                    mat[pos.Line, pos.Column] = true;
+                }
             }
             else
             {
@@ -64,6 +69,11 @@ namespace Chess
                 }
                 pos.setValues(Position.Line + 2, Position.Column);
                 if (Board.ValidPosition(pos) && free(pos) && MovementQuantity == 0)
+                {
+                    mat[pos.Line, pos.Column] = true;
+                }
+                pos.setValues(Position.Line + 1, Position.Column - 1);
+                if (Board.ValidPosition(pos) && existEnemy(pos))
                 {
                     mat[pos.Line, pos.Column] = true;
                 }
