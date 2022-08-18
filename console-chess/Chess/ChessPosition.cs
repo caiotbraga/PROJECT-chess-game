@@ -1,7 +1,8 @@
 ﻿using board;
+
 namespace Chess
 {
-    internal class ChessPosition 
+    class ChessPosition 
     {                            
         public char Column { get; set; }
         public int Line { get; set; }
@@ -9,7 +10,7 @@ namespace Chess
         public ChessPosition(char column, int line)
         {
             Column = column;
-            Line = line;
+            Line= line;
         }
 
         public Position ToPositon() 
@@ -19,8 +20,7 @@ namespace Chess
 
         public override string ToString() 
         {
-            return ""+Column + Line;
+            return "" + Column + Line;
         }
-
     }
 }

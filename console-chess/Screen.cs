@@ -2,22 +2,23 @@
 using System;
 using board;
 using Chess;
+
 namespace console_chess
 {
-    internal class Screen
+    class Screen
     {
 
         public static void printMatch(ChessMatch match)
         {
-            PrintBoard(match.board);
+            PrintBoard(match.Board);
             Console.WriteLine();
             printCapturedPieces(match);
             Console.WriteLine();
-            Console.WriteLine("Round " + match.round);
-            if (!match.finished)
+            Console.WriteLine("Round " + match.Round);
+            if (!match.Finished)
             {
-                Console.WriteLine("Round player: " + match.currentPlayer);
-                if (match.checkmate)
+                Console.WriteLine("Round player: " + match.CurrentPlayer);
+                if (match.Checkmate)
                 {
                     Console.WriteLine("CHECKMATE!");
                 }
@@ -25,7 +26,7 @@ namespace console_chess
             else 
             {
                 Console.WriteLine("CHECKATE!");
-                Console.WriteLine("Winner: "+match.currentPlayer);
+                Console.WriteLine("Winner: "+match.CurrentPlayer);
             }
         }
 
@@ -53,30 +54,31 @@ namespace console_chess
             Console.Write("]");
         }
 
-        public static void PrintBoard(Board board)
+        public static void PrintBoard(Board boa)
         {
-            for (int i = 0; i < board.Lines; i++)
+
+            for (int i = 0; i < boa.Lines; i++)
             {
                 Console.Write(8 - i + " ");
-                for (int j = 0; j < board.Columns; j++)
+                for (int j = 0; j < boa.Columns; j++)
                 {
-                    PrintPiece(board.piece(i, j));
+                    PrintPiece(boa.piece(i, j));
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("  A B C D E F G H");
         }
 
-        public static void PrintBoard(Board board, bool[,] PossiblePositions)
+        public static void PrintBoard(Board boa, bool[,] PossiblePositions)
         {
 
             ConsoleColor originalBackground = Console.BackgroundColor;
             ConsoleColor changedBackground = ConsoleColor.DarkGray;
 
-            for (int i = 0; i < board.Lines; i++)
+            for (int i = 0; i < boa.Lines; i++)
             {
                 Console.Write(8 - i + " ");
-                for (int j = 0; j < board.Columns; j++)
+                for (int j = 0; j < boa.Columns; j++)
                 {
                     if (PossiblePositions[i, j])
                     {
@@ -86,7 +88,7 @@ namespace console_chess
                     {
                         Console.BackgroundColor = originalBackground;
                     }
-                    PrintPiece(board.piece(i, j));
+                    PrintPiece(boa.piece(i, j));
                     Console.BackgroundColor = originalBackground;
                 }
                 Console.WriteLine();

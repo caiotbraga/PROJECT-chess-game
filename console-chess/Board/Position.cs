@@ -1,7 +1,8 @@
 ﻿namespace board
 {
-    internal class Position
+    class Position
     {
+
         public int Line { get; set; }
         public int Column { get; set; }
 
@@ -13,8 +14,8 @@
 
         public void setValues(int line, int column) 
         {
-            Line = line;
-            Column = column;
+            this.Line = line;
+            this.Column = column;
         }
 
         public override string ToString()

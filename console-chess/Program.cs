@@ -1,18 +1,21 @@
 ﻿using System;
 using board;
 using Chess;
+
 namespace console_chess
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
+
             try
             {
                 ChessMatch match = new ChessMatch();
 
-                while (!match.finished)
+                while (!match.Finished)
                 {
+
                     try
                     {
                         Console.Clear();
@@ -23,10 +26,10 @@ namespace console_chess
                         Position origin = Screen.ReadChessPosition().ToPositon();
                         match.validateOriginPosition(origin); 
 
-                        bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
+                        bool[,] possiblePositions = match.Board.piece(origin).possibleMoves();
 
                         Console.Clear();
-                        Screen.PrintBoard(match.board, possiblePositions);
+                        Screen.PrintBoard(match.Board, possiblePositions);
 
                         Console.WriteLine();
                         Console.Write("Destiny:");
@@ -44,10 +47,11 @@ namespace console_chess
                 Console.Clear();
                 Screen.printMatch(match);
             }
-            catch (BoardExceptions m)
+            catch (BoardExceptions e)
             {
-                Console.WriteLine(m.Message);
+                Console.WriteLine(e.Message);
             }
+
             Console.WriteLine();
         }
     }

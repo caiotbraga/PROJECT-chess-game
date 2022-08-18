@@ -1,17 +1,17 @@
 ﻿namespace board
 {
-    abstract internal class Piece 
+    abstract class Piece 
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
         public int MovementQuantity { get; protected set; } 
         public Board Board { get; protected set; }
 
-        public Piece(Board board, Color color) 
+        public Piece(Board boa, Color color) 
         {
             Position = null;
             Color = color;
-            Board = board;
+            Board = boa;
             MovementQuantity = 0;
         }
 
@@ -25,7 +25,7 @@
             MovementQuantity--;
         }
 
-        public bool existPossibleMoves()
+        public bool existPossibleMoves() 
         {
             bool[,] mat = possibleMoves();
             for(int i = 0; i < Board.Lines; i++)
@@ -48,7 +48,6 @@
 
         public abstract bool[,] possibleMoves();
 
-        public abstract bool canMove(Position pos); //I made it abstract cuz i was using in all pieces classes 
     }
 }
  

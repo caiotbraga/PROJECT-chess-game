@@ -1,11 +1,11 @@
 ﻿using board;
+
 namespace Chess
 {
-    internal class Tower : Piece
+    class Tower : Piece
     {
         public Tower(Board board, Color color) : base(board, color)
         {
-
         }
 
         public override string ToString()
@@ -13,7 +13,7 @@ namespace Chess
             return "T";
         }
 
-        public override bool canMove(Position pos)
+        private bool canMove(Position pos)
         {
             Piece p = Board.piece(pos);
             return p == null || p.Color != Color;
@@ -28,7 +28,7 @@ namespace Chess
 
             //up
             pos.setValues(Position.Line - 1, Position.Column);
-            while (Board.ValidPosition(pos) && canMove(pos)) 
+            while (Board.validPosition(pos) && canMove(pos)) 
             {
                 mat[pos.Line, pos.Column] = true; 
                 if(Board.piece(pos) != null && Board.piece(pos).Color != Color)
@@ -37,9 +37,10 @@ namespace Chess
                 }
                 pos.Line = pos.Line - 1;
             }
+
             //down
             pos.setValues(Position.Line + 1, Position.Column);
-            while (Board.ValidPosition(pos) && canMove(pos)) 
+            while (Board.validPosition(pos) && canMove(pos)) 
             {
                 mat[pos.Line, pos.Column] = true; 
                 if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
@@ -48,9 +49,10 @@ namespace Chess
                 }
                 pos.Line = pos.Line + 1;
             }
+
             //right
             pos.setValues(Position.Line, Position.Column + 1);
-            while (Board.ValidPosition(pos) && canMove(pos)) 
+            while (Board.validPosition(pos) && canMove(pos)) 
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.piece(pos) != null && Board.piece(pos).Color != Color)
@@ -59,9 +61,10 @@ namespace Chess
                 }
                 pos.Column = pos.Column + 1;
             }
+
             //left
             pos.setValues(Position.Line, Position.Column - 1);
-            while (Board.ValidPosition(pos) && canMove(pos))
+            while (Board.validPosition(pos) && canMove(pos))
             {
                 mat[pos.Line, pos.Column] = true; 
                 if (Board.piece(pos) != null && Board.piece(pos).Color != Color) 
@@ -70,6 +73,7 @@ namespace Chess
                 }
                 pos.Column = pos.Column - 1;
             }
+
             return mat;
         }
     }
