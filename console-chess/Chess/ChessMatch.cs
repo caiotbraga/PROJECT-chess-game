@@ -13,7 +13,7 @@ namespace Chess
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
         public bool Checkmate { get; private set; }
-        public Piece vulnerableEnPassant { get; private set; } //added enPassant parameter
+        public Piece vulnerableEnPassant { get; private set; } 
 
         public ChessMatch()
         {
@@ -22,7 +22,7 @@ namespace Chess
             CurrentPlayer = Color.White;
             Finished = false;
             Checkmate = false;
-            vulnerableEnPassant = null; //initialized to null
+            vulnerableEnPassant = null; 
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
             insertPiece();
@@ -62,16 +62,16 @@ namespace Chess
             //#SpecialPlay en passant
             if(p is Pawn)
             {
-                if(origin.Column != destiny.Column && capturedPiece == null) //if pawn is in a differennt column and didn't captured a piece it's because happened en passant 
+                if(origin.Column != destiny.Column && capturedPiece == null) 
                 {
                     Position PawnPos;
                     if(p.Color == Color.White)
                     {
-                        PawnPos = new Position(destiny.Line + 1, destiny.Column); //position of the piece that will be captured (white)
+                        PawnPos = new Position(destiny.Line + 1, destiny.Column); 
                     }
                     else
                     {
-                        PawnPos = new Position(destiny.Line - 1, destiny.Column); //position of the piece that will be captured (black)
+                        PawnPos = new Position(destiny.Line - 1, destiny.Column); 
                     }
                     capturedPiece = Board.removePiece(PawnPos);
                     Captured.Add(capturedPiece);
@@ -117,7 +117,7 @@ namespace Chess
             {
                 if(origin.Column != destiny.Column && capturedPiece == vulnerableEnPassant)
                 {
-                    Piece pawn = Board.removePiece(destiny); //removed the destiny position that it was the normal destiny if it wasn't an en passant 
+                    Piece pawn = Board.removePiece(destiny);  
                     Position PawnP;
                     if(p.Color == Color.White)
                     {
@@ -127,12 +127,12 @@ namespace Chess
                     {
                         PawnP = new Position(4, destiny.Column);
                     }
-                    Board.putPiece(pawn, PawnP); //put the piece in the right space as an en passant play
+                    Board.putPiece(pawn, PawnP); 
                 }
             }
         }
 
-        public void makePlay(Position origin, Position destiny) //Added a special play (En Passant)
+        public void makePlay(Position origin, Position destiny) 
         {
             Piece capturedPiece = peformMovement(origin, destiny);
 
@@ -140,6 +140,21 @@ namespace Chess
             {
                 undoMove(origin, destiny, capturedPiece);
                 throw new BoardExceptions("You can't put yourself in checkmate!");
+            }
+
+            Piece p = Board.piece(destiny);
+
+            //#SpecialPlay Promotion
+            if(p is Pawn)
+            {
+                if((p.Color == Color.White && destiny.Line == 0) || (p.Color == Color.Black && destiny.Line == 7))
+                {
+                    p = Board.removePiece(destiny);
+                    Pieces.Remove(p);
+                    Piece queen = new Queen(Board, p.Color);
+                    Board.putPiece(queen, destiny);
+                    Pieces.Add(queen);
+                }
             }
 
             if (isCheckmate(adversary(CurrentPlayer)))
@@ -161,17 +176,15 @@ namespace Chess
                 switchPlayer();
             }
 
-            Piece p = Board.piece(destiny);
-
             //#SpecialPlay en passant
 
-            if(p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2)) //If is a piece and moved 2 spaces
+            if(p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2)) 
             {
-                vulnerableEnPassant = p; //if it's (it was the first movement so it's vunerable)
+                vulnerableEnPassant = p; 
             }
             else
             {
-                vulnerableEnPassant = null; //if it wasn't 
+                vulnerableEnPassant = null; 
             }
         }
 
@@ -179,7 +192,7 @@ namespace Chess
         {
             if (Board.piece(pos) == null)
             {
-                throw new BoardExceptions("There is no piece in the origin position chosen"); //redone
+                throw new BoardExceptions("There is no piece in the origin position chosen"); 
             }
             if (CurrentPlayer != Board.piece(pos).Color)
             {

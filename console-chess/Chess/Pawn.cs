@@ -6,9 +6,9 @@ namespace Chess
     class Pawn : Piece
     {
 
-        private ChessMatch Match; //Need look at match because need see if the left piece is vunerable
+        private ChessMatch Match; 
 
-        public Pawn(Board board, Color color, ChessMatch match) : base(board, color) //added match to constructor
+        public Pawn(Board board, Color color, ChessMatch match) : base(board, color) 
         {
             Match = match;
         }
@@ -64,12 +64,12 @@ namespace Chess
                 {
                     Position left = new Position(Position.Line, Position.Column - 1);
                     if(Board.validPosition(left) && existEnemy(left) && Board.piece(left) == Match.vulnerableEnPassant) { 
-                        mat[left.Line - 1, left.Column] = true; //it's possible to move
+                        mat[left.Line - 1, left.Column] = true; 
                     }
                     Position right = new Position(Position.Line, Position.Column + 1);
                     if (Board.validPosition(right) && existEnemy(right) && Board.piece(right) == Match.vulnerableEnPassant)
                     {
-                        mat[right.Line - 1, right.Column] = true; //it's possible to move
+                        mat[right.Line - 1, right.Column] = true; 
                     }
                 }
             }
@@ -103,12 +103,12 @@ namespace Chess
                     Position left = new Position(Position.Line, Position.Column - 1);
                     if (Board.validPosition(left) && existEnemy(left) && Board.piece(left) == Match.vulnerableEnPassant)
                     {
-                        mat[left.Line + 1, left.Column] = true; //it's possible to move
+                        mat[left.Line + 1, left.Column] = true; 
                     }
                     Position right = new Position(Position.Line, Position.Column + 1);
                     if (Board.validPosition(right) && existEnemy(right) && Board.piece(right) == Match.vulnerableEnPassant)
                     {
-                        mat[right.Line + 1, right.Column] = true; //it's possible to move
+                        mat[right.Line + 1, right.Column] = true; 
                     }
                 }
             }
