@@ -6,8 +6,11 @@ namespace Chess
     class Pawn : Piece
     {
 
-        public Pawn(Board board, Color color) : base(board, color)
+        private ChessMatch Match; //Need look at match because need see if the left piece is vunerable
+
+        public Pawn(Board board, Color color, ChessMatch match) : base(board, color) //added match to constructor
         {
+            Match = match;
         }
 
         public override string ToString()
@@ -55,6 +58,20 @@ namespace Chess
                 {
                     mat[pos.Line, pos.Column] = true;
                 }
+                
+                //#SpecialPlay en passant (white piece)
+                if(Position.Line == 3)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if(Board.validPosition(left) && existEnemy(left) && Board.piece(left) == Match.vulnerableEnPassant) { 
+                        mat[left.Line - 1, left.Column] = true; //it's possible to move
+                    }
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.validPosition(right) && existEnemy(right) && Board.piece(right) == Match.vulnerableEnPassant)
+                    {
+                        mat[right.Line - 1, right.Column] = true; //it's possible to move
+                    }
+                }
             }
             else
             {
@@ -78,6 +95,21 @@ namespace Chess
                 if (Board.validPosition(pos) && existEnemy(pos))
                 {
                     mat[pos.Line, pos.Column] = true;
+                }
+
+                //#SpecialPlay en passant (black piece)
+                if (Position.Line == 4)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.validPosition(left) && existEnemy(left) && Board.piece(left) == Match.vulnerableEnPassant)
+                    {
+                        mat[left.Line + 1, left.Column] = true; //it's possible to move
+                    }
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.validPosition(right) && existEnemy(right) && Board.piece(right) == Match.vulnerableEnPassant)
+                    {
+                        mat[right.Line + 1, right.Column] = true; //it's possible to move
+                    }
                 }
             }
 

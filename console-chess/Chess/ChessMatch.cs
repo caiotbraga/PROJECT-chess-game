@@ -13,6 +13,7 @@ namespace Chess
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
         public bool Checkmate { get; private set; }
+        public Piece vulnerableEnPassant { get; private set; } //added enPassant parameter
 
         public ChessMatch()
         {
@@ -21,12 +22,13 @@ namespace Chess
             CurrentPlayer = Color.White;
             Finished = false;
             Checkmate = false;
+            vulnerableEnPassant = null; //initialized to null
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
             insertPiece();
         }
 
-        public Piece peformMovement(Position origin, Position destiny) //SpecialPlay added codes to castling  
+        public Piece peformMovement(Position origin, Position destiny) 
         {
             Piece p = Board.removePiece(origin);
             p.incrementMovementQuantity();
@@ -57,10 +59,29 @@ namespace Chess
                 Board.putPiece(T, destinyT);
             }
 
+            //#SpecialPlay en passant
+            if(p is Pawn)
+            {
+                if(origin.Column != destiny.Column && capturedPiece == null) //if pawn is in a differennt column and didn't captured a piece it's because happened en passant 
+                {
+                    Position PawnPos;
+                    if(p.Color == Color.White)
+                    {
+                        PawnPos = new Position(destiny.Line + 1, destiny.Column); //position of the piece that will be captured (white)
+                    }
+                    else
+                    {
+                        PawnPos = new Position(destiny.Line - 1, destiny.Column); //position of the piece that will be captured (black)
+                    }
+                    capturedPiece = Board.removePiece(PawnPos);
+                    Captured.Add(capturedPiece);
+                }
+            }
+
             return capturedPiece;
         }
 
-        public void undoMove(Position origin, Position destiny, Piece capturedPiece) //SpecialPlay added codes to castling  
+        public void undoMove(Position origin, Position destiny, Piece capturedPiece) 
         {
             Piece p = Board.removePiece(destiny);
             p.decrementMovementQuantity();
@@ -90,9 +111,28 @@ namespace Chess
                 T.decrementMovementQuantity();
                 Board.putPiece(T, originT);
             }
+
+            //#SpecialPlay en passant
+            if(p is Pawn)
+            {
+                if(origin.Column != destiny.Column && capturedPiece == vulnerableEnPassant)
+                {
+                    Piece pawn = Board.removePiece(destiny); //removed the destiny position that it was the normal destiny if it wasn't an en passant 
+                    Position PawnP;
+                    if(p.Color == Color.White)
+                    {
+                        PawnP = new Position(3, destiny.Column); 
+                    }
+                    else
+                    {
+                        PawnP = new Position(4, destiny.Column);
+                    }
+                    Board.putPiece(pawn, PawnP); //put the piece in the right space as an en passant play
+                }
+            }
         }
 
-        public void makePlay(Position origin, Position destiny)
+        public void makePlay(Position origin, Position destiny) //Added a special play (En Passant)
         {
             Piece capturedPiece = peformMovement(origin, destiny);
 
@@ -119,6 +159,19 @@ namespace Chess
             {
                 Round++;
                 switchPlayer();
+            }
+
+            Piece p = Board.piece(destiny);
+
+            //#SpecialPlay en passant
+
+            if(p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2)) //If is a piece and moved 2 spaces
+            {
+                vulnerableEnPassant = p; //if it's (it was the first movement so it's vunerable)
+            }
+            else
+            {
+                vulnerableEnPassant = null; //if it wasn't 
             }
         }
 
@@ -264,41 +317,41 @@ namespace Chess
             Pieces.Add(piece);
         }
 
-        public void insertPiece() //correcting and changing King and Queen's position. Was giving error 
+        public void insertPiece() 
         {
             insertNewPiece('a', 1, new Tower(Board, Color.White));
             insertNewPiece('b', 1, new Horse(Board, Color.White));
             insertNewPiece('c', 1, new Bishop(Board, Color.White));
-            insertNewPiece('d', 1, new Queen(Board, Color.White)); //'e' --> 'd'
-            insertNewPiece('e', 1, new King(Board, Color.White, this)); //'d' --> 'e'
+            insertNewPiece('d', 1, new Queen(Board, Color.White)); 
+            insertNewPiece('e', 1, new King(Board, Color.White, this)); 
             insertNewPiece('f', 1, new Bishop(Board, Color.White));
             insertNewPiece('g', 1, new Horse(Board, Color.White));
             insertNewPiece('h', 1, new Tower(Board, Color.White));
-            insertNewPiece('a', 2, new Pawn(Board, Color.White));
-            insertNewPiece('b', 2, new Pawn(Board, Color.White));
-            insertNewPiece('c', 2, new Pawn(Board, Color.White));
-            insertNewPiece('d', 2, new Pawn(Board, Color.White));
-            insertNewPiece('e', 2, new Pawn(Board, Color.White));
-            insertNewPiece('f', 2, new Pawn(Board, Color.White));
-            insertNewPiece('g', 2, new Pawn(Board, Color.White));
-            insertNewPiece('h', 2, new Pawn(Board, Color.White));
+            insertNewPiece('a', 2, new Pawn(Board, Color.White, this));
+            insertNewPiece('b', 2, new Pawn(Board, Color.White, this));
+            insertNewPiece('c', 2, new Pawn(Board, Color.White, this));
+            insertNewPiece('d', 2, new Pawn(Board, Color.White, this));
+            insertNewPiece('e', 2, new Pawn(Board, Color.White, this));
+            insertNewPiece('f', 2, new Pawn(Board, Color.White, this));
+            insertNewPiece('g', 2, new Pawn(Board, Color.White, this));
+            insertNewPiece('h', 2, new Pawn(Board, Color.White, this));
 
             insertNewPiece('a', 8, new Tower(Board, Color.Black));
             insertNewPiece('b', 8, new Horse(Board, Color.Black));
             insertNewPiece('c', 8, new Bishop(Board, Color.Black));
-            insertNewPiece('d', 8, new Queen(Board, Color.Black)); //'e' --> 'd'
-            insertNewPiece('e', 8, new King(Board, Color.Black, this)); //'d' --> 'e'
+            insertNewPiece('d', 8, new Queen(Board, Color.Black)); 
+            insertNewPiece('e', 8, new King(Board, Color.Black, this)); 
             insertNewPiece('f', 8, new Bishop(Board, Color.Black));
             insertNewPiece('g', 8, new Horse(Board, Color.Black));
             insertNewPiece('h', 8, new Tower(Board, Color.Black));
-            insertNewPiece('a', 7, new Pawn(Board, Color.Black));
-            insertNewPiece('b', 7, new Pawn(Board, Color.Black));
-            insertNewPiece('c', 7, new Pawn(Board, Color.Black));
-            insertNewPiece('d', 7, new Pawn(Board, Color.Black));
-            insertNewPiece('e', 7, new Pawn(Board, Color.Black));
-            insertNewPiece('f', 7, new Pawn(Board, Color.Black));
-            insertNewPiece('g', 7, new Pawn(Board, Color.Black));
-            insertNewPiece('h', 7, new Pawn(Board, Color.Black));
+            insertNewPiece('a', 7, new Pawn(Board, Color.Black, this));
+            insertNewPiece('b', 7, new Pawn(Board, Color.Black, this));
+            insertNewPiece('c', 7, new Pawn(Board, Color.Black, this));
+            insertNewPiece('d', 7, new Pawn(Board, Color.Black, this));
+            insertNewPiece('e', 7, new Pawn(Board, Color.Black, this));
+            insertNewPiece('f', 7, new Pawn(Board, Color.Black, this));
+            insertNewPiece('g', 7, new Pawn(Board, Color.Black, this));
+            insertNewPiece('h', 7, new Pawn(Board, Color.Black, this));
         }
     }
 }

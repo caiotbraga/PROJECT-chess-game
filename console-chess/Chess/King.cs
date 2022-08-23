@@ -5,7 +5,7 @@ namespace Chess
     class King : Piece
     {
 
-        private ChessMatch Match; //new 
+        private ChessMatch Match; 
 
         public King(Board board, Color color, ChessMatch match) : base(board, color){
             Match = match;
@@ -22,7 +22,7 @@ namespace Chess
             return p == null || p.Color != Color; 
         }
 
-        private bool testTowerToCastling(Position pos) //test to castle
+        private bool testTowerToCastling(Position pos) 
         {
             Piece p = Board.piece(pos);
             return p != null && p is Tower && p.Color == Color && p.MovementQuantity == 0;
