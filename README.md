@@ -168,3 +168,86 @@ The `Tower` class represents a rook (or tower) chess piece.
 - `override string ToString()`: Returns the string representation of the rook.
 - `private bool canMove(Position pos)`: Checks if the rook can move to the specified position.
 - `override bool[,] possibleMoves()`: Calculates and returns a boolean matrix indicating the possible moves for the rook on the board.
+
+# Chess Game Logic Documentation
+
+## ChessMatch Class
+
+The `ChessMatch` class represents the chess match itself, managing the game flow, player turns, and piece movements.
+
+### Properties
+
+- `Board`: Represents the game board.
+- `Round`: Tracks the current round of the game.
+- `CurrentPlayer`: Indicates which player's turn it is.
+- `Finished`: Tracks whether the game has finished.
+- `Checkmate`: Tracks whether a player is in checkmate.
+- `vulnerableEnPassant`: Stores the pawn that is vulnerable to en passant.
+
+### Constructor
+
+- `ChessMatch()`: Initializes a new chess match, setting up the board, round count, players, and pieces.
+
+### Methods
+
+- `peformMovement(Position origin, Position destiny)`: Performs a piece movement from `origin` to `destiny`, handling captures, special moves like castling and en passant, and promotion.
+- `undoMove(Position origin, Position destiny, Piece capturedPiece)`: Undoes a piece movement, reverting the board to its previous state.
+- `makePlay(Position origin, Position destiny)`: Executes a player's move, checking for checkmate, promoting pawns, and updating game state.
+- `validateOriginPosition(Position pos)`: Validates if the origin position chosen for a move is valid.
+- `validateDestinyPosition(Position origin, Position destiny)`: Validates if the destination position chosen for a move is valid.
+- `switchPlayer()`: Switches the current player's turn.
+- `capturedPieces(Color color)`: Returns the set of pieces captured by a specific color.
+- `pieceInGame(Color color)`: Returns the set of pieces in the game for a specific color.
+- `adversary(Color color)`: Returns the adversary color.
+- `king(Color color)`: Finds and returns the king piece of a specific color.
+- `isCheckmate(Color color)`: Checks if a player of a specific color is in checkmate.
+- `checkmateTest(Color color)`: Tests if a player of a specific color is in checkmate, considering possible moves.
+- `insertNewPiece(char column, int line, Piece piece)`: Inserts a new piece onto the board.
+- `insertPiece()`: Initializes the board with standard chess piece positions.
+
+## ChessPosition Class
+
+The `ChessPosition` class represents a position on the chessboard using algebraic notation.
+
+### Properties
+
+- `Column`: Represents the column of the position.
+- `Line`: Represents the line of the position.
+
+### Constructor
+
+- `ChessPosition(char column, int line)`: Initializes a new instance of the `ChessPosition` class.
+
+### Methods
+
+- `ToPositon()`: Converts the algebraic notation position to a `Position` object.
+- `ToString()`: Returns the string representation of the position.
+
+## Screen Class
+
+The `Screen` class handles the visual representation of the chess game in the console.
+
+### Methods
+
+- `printMatch(ChessMatch match)`: Prints the current state of the match including the board, captured pieces, round number, and current player.
+- `printCapturedPieces(ChessMatch match)`: Prints the captured pieces for both players.
+- `printSet(HashSet<Piece> set)`: Prints a set of pieces.
+- `PrintBoard(Board boa)`: Prints the game board.
+- `PrintBoard(Board boa, bool[,] PossiblePositions)`: Prints the game board highlighting possible moves.
+- `ReadChessPosition()`: Reads and returns a chess position input by the user.
+- `PrintPiece(Piece piece)`: Prints a piece on the board.
+
+
+### Method `Main(string[] args)`
+
+This is the entry point of the application. It initializes a chess match and continues executing until the match is finished.
+
+1. **Initializing the match**: The method starts by creating a new instance of a `ChessMatch` object, representing a chess match. This creates a new board and positions the pieces according to the rules of chess.
+
+2. **Main loop**: It then enters a loop while the match is not finished (`!match.Finished`). Within this loop, the game is displayed on the console and waits for player input to make a move.
+
+3. **Exception handling**: The main loop encompasses the entire process of playing a match, so any exceptions thrown during this process are handled. If a `BoardExceptions` type exception is thrown (for example, an invalid move), the program shows an error message and waits for the player to press Enter before continuing.
+
+4. **Finishing the match**: When the match is finished, either by checkmate or another win condition, the loop is exited, and the final state of the match is printed to the console.
+
+This method manages the execution of the chess game, interacting with the player, validating moves, and handling exceptions as necessary. It encapsulates all the logic for running the game within a main loop, making the code easy to understand and maintain.
