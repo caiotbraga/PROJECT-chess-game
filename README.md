@@ -1,4 +1,12 @@
-# Chess Game Documentation
+<h1 align="center">Chess Game Documentation ♟️</h1>
+
+<p>Welcome to the Console Chess project! This project aims to provide a classic game of chess with a graphical representation using the console interface. Chess is a timeless game known for its complexity, strategic depth, and rich history. With this project, players can enjoy the game of chess right from their command line interface.It can be played by 2 peoples.
+</p>
+
+<h2 align="center">💻Technologies useds</h2>
+<p align="center">
+  <a href="https://learn.microsoft.com/pt-br/dotnet/csharp" target="blank"><img src="https://img.shields.io/badge/C%23-purple?logo=c-sharp&logoColor=white&labelColor=421e6b" alt="C# Badge"></a>
+<a href="https://dotnet.microsoft.com/download/dotnet-core/3.1" target="_blank"><img src="https://img.shields.io/badge/ASP.NET_Core-3.1-grey?logo=.net&logoColor=white&labelColor=purple" alt="ASP.NET Core 3.1 Badge"></a>
 
 ## Board Class
 
